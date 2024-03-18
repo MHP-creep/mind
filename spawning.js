@@ -43,22 +43,26 @@ const base_setup = {
     builder: [WORK, CARRY, MOVE]
 };
 var firstnames = [
-    "Pyro",
-    "Cryo",
-    "Electro",
-    "Hydro",
-    "Anemo",
-    "Geo",
-    "Dendro"
+    "Ice",
+    "Dragon",
+    "Wither",
+    "Undead",
+    "Spider",
+    "Diamond",
+    "Gold"
 ];
 var lastnames = [
-    "Water",
-    "Thunder",
-    "Rock",
-    "Ice",
-    "Fire",
-    "Wind",
-    "Grass"
+    "fish",
+    "shark",
+    "leech",
+    "shrimp",
+    "whale",
+    "catfish",
+    "octopus",
+    "seahorse",
+    "eel",
+    "jellyfish",
+    "tarantula"
 ];
 var luck = [
     "1",
@@ -71,8 +75,8 @@ var luck = [
     "8",
     "9",
     "0",
-    "$"
-]
+    "#"
+];
 function getRandoCreepName () {
     firstnames = _.shuffle (firstnames);
     lastnames = _.shuffle (lastnames);

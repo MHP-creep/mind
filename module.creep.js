@@ -84,7 +84,8 @@ function upgrade (creep) {
  */
 function build (creep) {
     if (!creep.memory.target) {
-        creep.memory.target = creep.pos.findClosestByPath (FIND_CONSTRUCTION_SITES)?.id;
+        creep.memory.target = creep.pos.findClosestByPath (FIND_CONSTRUCTION_SITES);
+        if (creep.memory.target) creep.memory.target = creep.memory.target.id;
     }
     if (creep.memory.target) {
         let target = Game.getObjectById (creep.memory.target);
@@ -93,6 +94,17 @@ function build (creep) {
             if (result == ERR_NOT_IN_RANGE) creep.moveTo (target);
         }
         else creep.memory.target = null;
+    }
+    else {
+        let broken = creep.pos.findClosestByPath (FIND_MY_STRUCTURES, {
+            filter: function (structure) {
+                return structure.structureType != STRUCTURE_RAMPART && structure.hits < structure.hitsMax * 0.8;
+            }
+        });
+        if (broken) {
+            let result = creep.repair (broken);
+            if (result == ERR_NOT_IN_RANGE) creep.moveTo (target);
+        }
     }
     return creep.store.getUsedCapacity () == 0;
 }

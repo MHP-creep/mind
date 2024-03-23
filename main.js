@@ -15,10 +15,10 @@ To be implemented:
 import overlord from "./overlord";
 import api from "./api";
 
-export function loop () {  
+export function loop () {
     for (var key in Game.rooms) {
         var room = Game.rooms[key];
-        if (room.controller?.my) {
+        if (room.controller && room.controller.my) {
             overlord.manageRoom (room);
         }
     }
@@ -26,7 +26,7 @@ export function loop () {
         var creep = Game.creeps[key];
         overlord.manageCreep (creep);
     }
-    overlord.resolve ();
     
+    overlord.resolve ();
     api.load ();
 }

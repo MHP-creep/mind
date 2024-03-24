@@ -29,4 +29,8 @@ export function loop () {
     
     overlord.resolve ();
     api.load ();
+    
+    if (Game.cpu.bucket == 10000) {
+        Game.cpu.generatePixel ();
+    }
 }

@@ -1,6 +1,7 @@
 import spawning from "./spawning";
 import moduleCreep from "./module.creep";
 import moduleRooms from "./module.rooms";
+import defense from "./defense";
 
 /**
  * 
@@ -9,6 +10,7 @@ import moduleRooms from "./module.rooms";
 function manageRoom (room) {
     spawning.manageSpawns (room);
     moduleRooms.maintainBaseCreeps (room);
+    defense.operateTowers (room);
 }
 /**
  * 

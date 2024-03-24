@@ -11,6 +11,10 @@ function harvest (creep) {
     let source = null;
     if (creep.memory.source) {
         source = Game.getObjectById (creep.memory.source);
+        if (source.energy == 0) {
+            source = null;
+            creep.memory.source = null;
+        }
     }
     else {
         source = creep.pos.findClosestByPath (FIND_SOURCES_ACTIVE);
@@ -96,14 +100,14 @@ function build (creep) {
         else creep.memory.target = null;
     }
     else {
-        let broken = creep.pos.findClosestByPath (FIND_MY_STRUCTURES, {
+        let broken = creep.pos.findClosestByPath (FIND_STRUCTURES, {
             filter: function (structure) {
-                return structure.structureType != STRUCTURE_RAMPART && structure.hits < structure.hitsMax * 0.8;
+                return (structure.structureType != STRUCTURE_WALL && structure.structureType != STRUCTURE_RAMPART && structure.hits < structure.hitsMax);
             }
         });
         if (broken) {
             let result = creep.repair (broken);
-            if (result == ERR_NOT_IN_RANGE) creep.moveTo (target);
+            if (result == ERR_NOT_IN_RANGE) creep.moveTo (broken);
         }
     }
     return creep.store.getUsedCapacity () == 0;

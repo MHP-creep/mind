@@ -94,8 +94,8 @@ function getRandoCreepName () {
  * @param {Room} room 
  */
 function manageSizeControl (room) {
-    if (Game.time % 500 == 0) {
-        if (room.memory.size_control.fullticks >= 250) {
+    if (Game.time % 1500 == 0) {
+        if (room.memory.size_control.fullticks >= 500) {
             if (room.memory.size_control.streak < 0) {
                 room.memory.size_control.streak = 0;
             }
@@ -109,24 +109,26 @@ function manageSizeControl (room) {
         }
         else room.memory.size_control.streak = 0;
         room.memory.size_control.fullticks = 0;
-
-        if (room.memory.size_control.streak >= 3) {
-            let new_level = room.memory.size_control.rsg + 1;
-            if (new_level <= 10 && room.energyCapacityAvailable >= new_level * 200 && room.memory.size_control.cooldown == 0) {
-                room.memory.size_control.rsg += 1;
-                room.memory.size_control.cooldown = 5;
-                room.memory_size_control.streak = 0;
-            }
-        }
-        else if (room.memory.size_control.streak <= -3 && room.memory.size_control.cooldown == 0) {
-            let new_level = room.memory.size_control.rsg - 1;
-            if (new_level > 0) {
-                room.memory.size_control.cooldown = 2;
-                room.memory.size_control.rsg -= 1;
-                room.memory_size_control.streak = 0;
-            }
+        if (room.memory.size_control.cooldown == 0) {
+          if (room.memory.size_control.streak >= 3) {
+              let new_level = room.memory.size_control.rsg + 1;
+              if (new_level <= 10 && room.energyCapacityAvailable >= new_level * 200 && room.memory.size_control.cooldown == 0) {
+                  room.memory.size_control.rsg += 1;
+                  room.memory.size_control.cooldown = 5;
+                  room.memory.size_control.streak = 0;
+              }
+          }
+          else if (room.memory.size_control.streak <= -3) {
+              let new_level = room.memory.size_control.rsg - 1;
+              if (new_level > 0) {
+                  room.memory.size_control.cooldown = 2;
+                  room.memory.size_control.rsg -= 1;
+                  room.memory.size_control.streak = 0;
+              }
+          }
         }
         else room.memory.size_control.cooldown -= 1;
+        room.memory.size_control.cooldown = _.max ([room.memory.size_control.cooldown, 0]);
     }
     if (room.energyAvailable == room.energyCapacityAvailable) {
         room.memory.size_control.fullticks += 1;
